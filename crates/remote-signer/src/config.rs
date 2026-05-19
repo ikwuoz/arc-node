@@ -204,8 +204,8 @@ mod tests {
         assert!(config.validate().is_ok());
     }
 
-    #[tokio::test]
-    async fn config_builder_pattern() {
+    #[test]
+    fn test_config_builder_pattern() {
         let config = RemoteSigningConfig::default()
             .with_timeout(Duration::from_secs(10))
             .with_retry_config(RetryConfig::new(
@@ -219,8 +219,8 @@ mod tests {
         assert_eq!(config.retry_config.max_retries, 2);
     }
 
-    #[tokio::test]
-    async fn retry_config_validation() {
+    #[test]
+    fn test_retry_config_validation() {
         let retry_config = RetryConfig::new(5, Duration::from_millis(100), Duration::from_secs(10))
             .with_backoff_multiplier(1.5);
 
