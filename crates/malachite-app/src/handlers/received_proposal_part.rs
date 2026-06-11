@@ -128,7 +128,14 @@ fn record_proposal_in_monitor(state: &mut State, proposed_value: &ProposedValue<
         return;
     }
 
-    monitor.record_proposal(proposed_value.value.id());
+    if !monitor.record_proposal(proposed_value.value.id()) {
+        warn!(
+            height = %monitor.height,
+            first_value = %monitor.value_id.unwrap(),
+            new_value = %proposed_value.value.id(),
+            "Equivocating proposal at round 0"
+        );
+    }
 }
 
 struct HandlerContext<'a, 'b> {
